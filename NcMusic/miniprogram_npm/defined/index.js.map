@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.js"],"names":[],"mappings":";;;;;;;AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA","file":"index.js","sourcesContent":["\n\nmodule.exports = function defined() {\n\tfor (var i = 0; i < arguments.length; i++) {\n\t\tif (typeof arguments[i] !== 'undefined') {\n\t\t\treturn arguments[i];\n\t\t}\n\t}\n};\n"]}

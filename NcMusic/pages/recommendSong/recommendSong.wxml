@@ -1,0 +1,29 @@
+<!--pages/recommendSong/recommendSong.wxml-->
+<view class="recommendSongContainer">
+    <view class="header">
+        <image src="/static/images/recommendSong/recommendSong.jpg" />
+        <text >{{month}} / {{day}}</text>
+    </view>
+    <view class="musicList">
+        <view class="musicListHeader">
+            <text>播放全部</text>
+            <text id="more">多选</text>
+        </view>
+        <scroll-view class="musicScroll" scroll-y="{{true}}">
+            <view class="musicItem" 
+                wx:for="{{recommendList}}" 
+                wx:key="id" 
+                bindtap="toSongDetail" 
+                id="{{item.id}}"
+                data-index="{{index}}"
+            >
+                <image src="{{item.album.picUrl}}" />
+                <view class="musicItemBody">
+                    <text class="musicName">{{item.name}}</text>
+                    <text class="author">{{item.artists[0].name}}</text>
+                </view>
+                <text >...</text>
+            </view>
+        </scroll-view>
+    </view>
+</view>

@@ -1,0 +1,45 @@
+<!--pages/search/search.wxml-->
+<view class="searchContainer">
+    <view class="header">
+        <text class="iconfont icon-search"></text>
+        <input type="text" placeholder="{{showKeyword}}" bindinput="goSearch"/>
+        <text class="cancel">取消</text>
+    </view>
+
+    <block wx:if="{{searchMusicList.length}}">
+        <!-- 搜索内容展示 -->
+        <view class="showSearchContent">
+            <view class="searchContent">搜索内容: {{keyWords}}</view>
+            <view class="searchList">
+            <view class="searchItem" wx:for="{{searchMusicList}}" wx:key="id">
+                <text class="iconfont icon-search1"></text>
+                <text class="content">{{item.name}}</text>
+            </view>
+            </view>
+        </view>
+    </block>
+
+    <block wx:else>
+        <!-- 搜索历史记录 -->
+        <view class="history" wx:if="{{historyList.length}}">
+        <view class="title">历史</view>
+        <view class="historyItem" wx:for="{{historyList}}" wx:key="{{index}}">
+            {{item}}
+        </view>
+        <!-- 删除 -->
+        <text class="iconfont icon-shanchu delete" bindtap="deleteSearchHistory"></text>
+        </view>
+        <view class="hotSearchList">
+        <view class="title">热搜榜</view>
+        <view class="line"></view>
+        <view class="hotList">
+            <view class="hotItem" wx:for="{{musicRankList}}" wx:key="content">
+                <text class="order">{{index+1}}</text>
+                <text >{{item.searchWord}}</text>
+                <image src="{{item.iconUrl}}" wx:if="{{item.iconType}}"/>
+            </view>
+        </view>
+    </view>
+    </block>
+    
+</view>

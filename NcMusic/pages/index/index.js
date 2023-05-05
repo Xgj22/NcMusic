@@ -1,0 +1,97 @@
+// pages/index/index.js
+import request from "../../utils/request.js"
+// 因为使用了 ES7 语法，（而且IDE中无增强编译的选项）需要引入外部模块
+import regeneratorRuntime from '../../utils/runtime.js'
+
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    bannerList:[],
+    recommendList:[],
+    topMusicList:[]
+  },
+  toRecommend(){
+    wx.navigateTo({
+      url:"/pages/recommendSong/recommendSong"
+    })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: async function (options) {
+    let bannerListData = await request('/banner',{type:2},'get')
+    this.setData({
+      bannerList:bannerListData.banners
+    })
+    let recommendListData = await request('/personalized',{type:2,limit:20},'get')
+    this.setData({
+      recommendList : recommendListData.result
+    })
+    
+    let index = 0
+    let tempArr = []
+    while(index<5){
+      let topListData = await request('/top/list',{idx:index++},'get')
+      let topMusic = {name:topListData.playlist.name,
+        tracks:topListData.playlist.tracks.splice(0,3),
+      }
+      tempArr.push(topMusic)
+    }
+    this.setData({
+      topMusicList:tempArr
+    })
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+  
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+  
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+  
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+  
+  }
+})

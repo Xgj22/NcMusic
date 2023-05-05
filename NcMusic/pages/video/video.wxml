@@ -1,0 +1,80 @@
+<!--pages/video/video.wxml-->
+<view class="videoContainer">
+    <view class="header">
+        <image src="/static/images/video/video.jpg"/>
+        <text class="headerText" bindtap="toSearch">搜索框</text>
+        <image src="/static/images/logo.png" />
+    </view>
+    <view class="navContainer">
+        <!-- <scroll-view scroll-x enable-flex class="navScroll" scroll-into-view = "{{navId}}">
+            <view class="navItem {{navId==item.id?'active':''}} " 
+                wx:for="{{videoGroupList}}" wx:key="index"
+                bindtap="changeNav"
+                id="{{item.id}}"
+                
+            >
+            <!-- 想要知道绑定的是哪一个dom元素,传递id值进去,由于小程序无法直接传参,使用id传参 -->
+                <!-- <text>{{item.name}}</text>
+            </view>
+        </scroll-view>  -->
+
+          <!-- 导航区域 -->
+        <scroll-view
+            scroll-x
+            class="navScroll"
+            enable-flex
+            scroll-into-view="{{'scroll' + navId}}"
+            scroll-with-animation
+        >
+            <view id="{{'scroll' + item.id}}" class="navItem" wx:for="{{videoGroupList}}" wx:key="id">
+                <view class="navContent {{navId === item.id?'active': ''}}" bindtap="changeNav" id="{{item.id}}" data-id="{{item.id}}">
+                    {{item.name}}
+                </view>
+            </view>
+        </scroll-view>
+        <scroll-view 
+            scroll-y class="videoScroll"
+            refresher-enabled
+            bindrefresherrefresh="handleRefresh"
+            refresher-triggered="{{isTriggered}}"
+        >
+            <view class="videoItem" wx:for="{{videoList}}" wx:key="id">
+                <video 
+                    src="{{item.data.urlInfo.url}}" 
+                    bindtap="handlerPlay" id="{{item.id}}" 
+                    poster="{{item.data.coverUrl}}"
+                    wx:if="{{item.id==videoId}}"
+                    autoplay="{{true}}"
+                    object-fit="cover"
+                    bindtimeupdate="handlerTimeUpdate"
+                >
+                </video>
+                <image wx:else src="{{item.data.coverUrl}}" bindtap="handlerPlay" id="{{item.id}}"/>
+
+                <view class="content">{{item.data.title}}</view>
+
+                <view class="footer">
+                    <image class="avatar" src="{{item.data.creator.avatarUrl}}"></image>
+                    <text class="nickName">{{item.data.creator.nickname}}</text>
+                    <view class="comments_praised">
+                    <text class="item">
+                        <text class="iconfont icon-buoumaotubiao15"></text>
+                        <text class="count">{{item.data.praisedCount}}</text>
+                    </text>
+                    <text class="item">
+                        <text class="iconfont icon-pinglun1"></text>
+                        <text class="count">{{item.data.commentCount}}</text>
+                    </text>
+                    <button open-type="share" class="item btn">
+                        <text class="iconfont icon-gengduo">...</text>
+                    </button>
+                </view>
+            </view>
+
+            
+            </view>
+        </scroll-view>
+
+        
+    </view>
+</view>
